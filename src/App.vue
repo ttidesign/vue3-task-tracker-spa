@@ -1,24 +1,46 @@
 <template>
   <div class="container">
     <HeaderView title="Task Tracker" />
-    <TasksComp :tasks="tasks" />
+    <AddTask @add-task="addTask" />
+    <TasksComp
+      :tasks="tasks"
+      @delete-task="deleteTask"
+      @toggle-reminder="toggleReminder"
+    />
   </div>
   <router-view />
 </template>
 <script>
 import HeaderView from "./components/HeaderView.vue";
 import TasksComp from "./components/TasksComp.vue";
+import AddTask from "./components/AddTask.vue";
 
 export default {
   name: "App",
   components: {
     HeaderView,
     TasksComp,
+    AddTask,
   },
   data() {
     return {
       tasks: [],
     };
+  },
+  methods: {
+    addTask(task) {
+      this.tasks = [...this.tasks, task];
+    },
+    deleteTask(id) {
+      if (confirm("Are you sure?")) {
+        this.tasks = this.tasks.filter((task) => task.id !== id);
+      }
+    },
+    toggleReminder(id) {
+      this.tasks = this.tasks.map((task) =>
+        task.id === id ? { ...task, reminder: !task.reminder } : task
+      );
+    },
   },
   created() {
     this.tasks = [
@@ -32,13 +54,13 @@ export default {
         id: 2,
         text: "Cancel Appointment with doctor",
         date: "March 31 2022",
-        reminder: false,
+        reminder: true,
       },
       {
         id: 3,
         text: "Call Doctor to Schedule",
         date: "March 31 2022",
-        reminder: true,
+        reminder: false,
       },
     ];
   },
