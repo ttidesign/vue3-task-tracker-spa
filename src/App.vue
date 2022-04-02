@@ -2,77 +2,30 @@
   <div class="container">
     <HeaderView
       title="Task Tracker"
-      @toggle-add-task="toggleAddTask()"
-      :showAddTask="toggle"
+      @toggle-add-task="toggleAddTask"
+      :showAddTask="showAddTask"
     />
-    <div>
-      <AddTask @add-task="addTask" v-if="toggle" />
-    </div>
-    <TasksComp
-      :tasks="tasks"
-      @delete-task="deleteTask"
-      @toggle-reminder="toggleReminder"
-    />
+    <router-view :showAddTask="showAddTask"> </router-view>
   </div>
-  <router-view />
 </template>
 <script>
-import HeaderView from "./components/HeaderView.vue";
-import TasksComp from "./components/TasksComp.vue";
-import AddTask from "./components/AddTask.vue";
+import HeaderView from "./components/HeaderComp.vue";
 
 export default {
   name: "App",
   components: {
     HeaderView,
-    TasksComp,
-    AddTask,
   },
   data() {
     return {
       tasks: [],
-      toggle: false,
+      showAddTask: false,
     };
   },
   methods: {
-    addTask(task) {
-      this.tasks = [...this.tasks, task];
-    },
-    deleteTask(id) {
-      if (confirm("Are you sure?")) {
-        this.tasks = this.tasks.filter((task) => task.id !== id);
-      }
-    },
-    toggleReminder(id) {
-      this.tasks = this.tasks.map((task) =>
-        task.id === id ? { ...task, reminder: !task.reminder } : task
-      );
-    },
     toggleAddTask() {
-      this.toggle = !this.toggle;
+      this.showAddTask = !this.showAddTask;
     },
-  },
-  created() {
-    this.tasks = [
-      {
-        id: 1,
-        text: "Doctor Appointment",
-        date: "March 31 2022",
-        reminder: true,
-      },
-      {
-        id: 2,
-        text: "Cancel Appointment with doctor",
-        date: "March 31 2022",
-        reminder: true,
-      },
-      {
-        id: 3,
-        text: "Call Doctor to Schedule",
-        date: "March 31 2022",
-        reminder: false,
-      },
-    ];
   },
 };
 </script>
