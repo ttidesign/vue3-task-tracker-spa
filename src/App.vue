@@ -6,15 +6,18 @@
       :showAddTask="showAddTask"
     />
     <router-view :showAddTask="showAddTask"> </router-view>
+    <FooterComp />
   </div>
 </template>
 <script>
 import HeaderView from "./components/HeaderComp.vue";
+import FooterComp from "./components/FooterComp.vue";
 
 export default {
   name: "App",
   components: {
     HeaderView,
+    FooterComp,
   },
   data() {
     return {

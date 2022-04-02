@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <AddTask @add-task="addTask" v-if="showAddTask" />
-  </div>
+  <AddTask @add-task="addTask" v-if="showAddTask" />
   <TasksComp
     :tasks="tasks"
     @delete-task="deleteTask"

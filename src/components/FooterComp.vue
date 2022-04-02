@@ -4,11 +4,7 @@
     <router-link to="/about">About</router-link>
   </footer>
 </template>
-<script>
-export default {
-  name: "FooterComp",
-};
-</script>
+
 <style scoped>
 a {
   color: #333;
